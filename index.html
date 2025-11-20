@@ -110,38 +110,7 @@ function jltmaNS(n){for(var e=n.split("."),a=window,i="",r=e.length,t=0;r>t;t++)
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('fonts/bwenTkHSelAA.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('fonts/kfsyCCes4cQQ.woff2') format('woff2');}
 </style>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-	<style id="embedded-site-styles">
-		/* Single-scroll layout: allow the page to scroll (one scrollbar) and
-		   set a large default iframe height so the iframe doesn't create
-		   its own inner scrollbar. For true automatic sizing you need
-		   cooperation from the embedded site (postMessage or same-origin).
-
-		   The overlay element (#embedded-overlay) captures wheel and touch
-		   events and forwards them to the parent (window.scrollBy), so the
-		   whole page scrolls even when the pointer is over the iframe.
-		   Click the floating button to temporarily allow interacting with
-		   the embedded page (overlay hidden). */
-		/* Ensure page background is solid white so embedded content appears on white */
-		html, body { margin: 0; background: #ffffff; }
-		body { overflow: auto; }
-		  /* White backdrop behind the iframe to mask any transparent background
-			  coming from the embedded site. This doesn't override the embed's
-			  own CSS but ensures the page around it is white. */
-		  #embedded-site { width: 100%; height: auto; min-height: 800px; overflow: visible; position: relative; background: #ffffff; }
-		  /* Allocate a very large default height so the embedded site renders
-			  fully within the page and doesn't create an internal scrollbar.
-			  This plus the overlay that captures wheel/touch ensures a single
-			  page-level scroll. If the embed cooperates with postMessage the
-			  iframe will be resized to the exact content height. */
-		  #embedded-site iframe { width: 100%; height: 10000px; border: 0; display: block; }
-		#embedded-overlay { position: absolute; inset: 0; z-index: 9999; background: transparent; touch-action: none; cursor: grab; }
-		#embedded-overlay[hidden] { display: none; }
-		/* No visible button: interaction is via double-tap on the iframe area (temporary disable). */
-		@media (max-width: 900px) { #embedded-site { min-height: 600px; } #embedded-site iframe { height: 900px; } }
-		@media (max-width: 600px) { #embedded-site { min-height: 480px; } #embedded-site iframe { height: 640px; } }
-	</style>
-</head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head>
 <body class="home wp-singular page-template page-template-elementor_canvas page page-id-7 wp-embed-responsive wp-theme-twentytwentyfive elementor-default elementor-template-canvas elementor-kit-6 elementor-page elementor-page-7">
 			<div data-elementor-type="wp-page" data-elementor-id="7" class="elementor elementor-7">
 				<div class="elementor-element elementor-element-2afee2c9 e-flex e-con-boxed e-con e-parent" data-id="2afee2c9" data-element_type="container" data-settings="{" background_background":"gradient"}"="">
@@ -192,9 +161,51 @@ src="https://www.facebook.com/tr?id=1397684491501570&ev=PageView&noscript=1"
 		<div class="elementor-element elementor-element-56659c94 e-flex e-con-boxed e-con e-parent" data-id="56659c94" data-element_type="container">
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-447077b6 jltma-glass-effect-no elementor-widget elementor-widget-html" data-id="447077b6" data-element_type="widget" data-widget_type="html.default">
-					<!-- purchase embed removed as requested -->
-					<div class="removed-embed" aria-hidden="true" style="display:none;"></div>
-				</div>
+					<embed id="purchase-embed" src="https://www.kintu.org/product/0e5bfcbc-9090-441a-bcbc-fb7397fd812b" style="width:500px; height: 900px; display:block; border:0;">
+					<script>
+					(function(){
+					    // create overlay to capture wheel/touch over the embed and forward it to parent
+					    var embed = document.getElementById('purchase-embed');
+					    if(!embed) return;
+					    var wrapper = document.createElement('div');
+					    wrapper.style.position = 'relative';
+					    wrapper.style.width = embed.style.width || '500px';
+					    wrapper.style.height = embed.style.height || '900px';
+					    embed.parentNode.insertBefore(wrapper, embed);
+					    wrapper.appendChild(embed);
+					    var overlay = document.createElement('div');
+					    overlay.className = 'embed-scroll-catcher';
+					    overlay.style.position = 'absolute';
+					    overlay.style.left = '0'; overlay.style.top = '0'; overlay.style.right = '0'; overlay.style.bottom = '0';
+					    overlay.style.background = 'transparent';
+					    overlay.style.zIndex = '10';
+					    wrapper.appendChild(overlay);
+
+					    overlay.addEventListener('wheel', function(e){
+					        e.preventDefault();
+					        window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: 'auto' });
+					    }, { passive: false });
+
+					    var touchStartY = 0;
+					    overlay.addEventListener('touchstart', function(e){ if(e.touches && e.touches.length) touchStartY = e.touches[0].clientY; }, { passive: true });
+					    overlay.addEventListener('touchmove', function(e){
+					        if(!e.touches || !e.touches.length) return;
+					        e.preventDefault();
+					        var curY = e.touches[0].clientY;
+					        var delta = touchStartY - curY;
+					        window.scrollBy({ top: delta, behavior: 'auto' });
+					        touchStartY = curY;
+					    }, { passive: false });
+
+					    var hideTimeout = null;
+					    overlay.addEventListener('click', function(){
+					        overlay.style.display = 'none';
+					        if(hideTimeout) clearTimeout(hideTimeout);
+					        hideTimeout = setTimeout(function(){ overlay.style.display = 'block'; }, 3000);
+					    });
+					})();
+						</script>
+						</div>
 					</div>
 				</div>
 		<div class="elementor-element elementor-element-763eb4c4 e-flex e-con-boxed e-con e-parent" data-id="763eb4c4" data-element_type="container">
@@ -368,98 +379,4 @@ var jltma_data_table_vars = {"lengthMenu":"Display _MENU_ records per page","zer
 
 
 
-	<!-- Inserido: iframe para site externo (abaixo do conteúdo, mantém scrolagem única no iframe) -->
-	<div id="embedded-site" aria-label="embedded-site-container">
-		<iframe id="external-embed" title="Kintu product" src="https://www.kintu.org/product/0e5bfcbc-9090-441a-bcbc-fb7397fd812b" loading="lazy" sandbox="allow-scripts allow-forms allow-same-origin" scrolling="auto"></iframe>
-		<div id="embedded-overlay" aria-hidden="false" role="presentation"></div>
-	</div>
-
-	<script>
-	(function(){
-		var overlay = document.getElementById('embedded-overlay');
-
-		if(!overlay) return;
-
-		// Smooth scroll forwarding: accumulate deltas and animate via rAF
-		var pendingScroll = 0;
-		var isAnimating = false;
-		function scheduleScrollAnim() {
-			if (!isAnimating) { isAnimating = true; requestAnimationFrame(stepScroll); }
-		}
-		function stepScroll() {
-			// Apply a portion of pendingScroll each frame for smooth feeling
-			var applied = pendingScroll * 0.35;
-			if (Math.abs(applied) < 0.5) applied = pendingScroll;
-			window.scrollBy(0, applied);
-			pendingScroll -= applied;
-			if (Math.abs(pendingScroll) > 0.5) requestAnimationFrame(stepScroll);
-			else isAnimating = false;
-		}
-
-		overlay.addEventListener('wheel', function(e){
-			// send wheel to parent scroll smoothly
-			e.preventDefault();
-			pendingScroll += e.deltaY;
-			scheduleScrollAnim();
-		}, { passive: false });
-
-		// Touch handling: translate touch moves into pendingScroll
-		var touchStartY = 0;
-		overlay.addEventListener('touchstart', function(e){
-			if(e.touches && e.touches.length) touchStartY = e.touches[0].clientY;
-		}, { passive: true });
-		overlay.addEventListener('touchmove', function(e){
-			if(!e.touches || !e.touches.length) return;
-			var y = e.touches[0].clientY;
-			var delta = touchStartY - y;
-			touchStartY = y;
-			e.preventDefault();
-			pendingScroll += delta;
-			scheduleScrollAnim();
-		}, { passive: false });
-
-		// Overlay is permanent: always capture pointer/touch/wheel so the
-		// parent page owns the scrolling behavior. No visible controls,
-		// no gestures to disable the overlay. This ensures a unique scroll
-		// experience across the whole page. If you need to interact with
-		// the embedded site, the embed must be resized via postMessage (see
-		// handshake below) or served same-origin.
-		overlay.removeAttribute('hidden');
-		overlay.setAttribute('aria-hidden','false');
-		overlay.style.pointerEvents = 'auto';
-		overlay.style.cursor = 'grab';
-
-		// POSTMESSAGE resize handshake: ask the iframe to report its height.
-		// If the embedded page implements the responder (snippet provided
-		// below), it will send back {type:'embedHeight', height:NNN} and the
-		// parent will resize the iframe to remove iframe-internal scrollbars.
-		var iframe = document.getElementById('external-embed');
-		function requestEmbedHeight(){
-			if(!iframe || !iframe.contentWindow) return;
-			try{ iframe.contentWindow.postMessage({ type: 'requestHeight' }, '*'); }
-			catch(e){}
-		}
-
-		// Listen for messages from the embedded page
-		window.addEventListener('message', function(evt){
-			try {
-				var data = evt.data;
-				if(!data || typeof data !== 'object') return;
-				if(data.type === 'embedHeight'){
-					var h = parseInt(data.height, 10) || 0;
-					if(h > 0 && iframe) {
-						iframe.style.height = h + 'px';
-					}
-				}
-			} catch(e) { /* ignore malformed messages */ }
-		}, false);
-
-		// Ask for height on load and a few times afterward in case content
-		// loads lazily; if the embed cooperates it will remove its own scroll.
-		requestEmbedHeight();
-		var reqInterval = setInterval(requestEmbedHeight, 1500);
-		// stop requesting after 20s to avoid infinite polling
-		setTimeout(function(){ clearInterval(reqInterval); }, 20000);
-	})();
-	</script>
 </body></html><!-- Page cached by LiteSpeed Cache 7.2 on 2025-07-27 16:30:51 -->
