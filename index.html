@@ -129,10 +129,12 @@ function jltmaNS(n){for(var e=n.split("."),a=window,i="",r=e.length,t=0;r>t;t++)
 			  coming from the embedded site. This doesn't override the embed's
 			  own CSS but ensures the page around it is white. */
 		  #embedded-site { width: 100%; height: auto; min-height: 800px; overflow: visible; position: relative; background: #ffffff; }
-		  /* Default iframe height is large to reduce chance of internal scrolling
-			  when the embedded site is not cooperative. If the embed supports
-			  postMessage height reporting, the iframe will be resized later. */
-		  #embedded-site iframe { width: 100%; height: 3000px; border: 0; display: block; overflow: hidden; }
+		  /* Allocate a very large default height so the embedded site renders
+			  fully within the page and doesn't create an internal scrollbar.
+			  This plus the overlay that captures wheel/touch ensures a single
+			  page-level scroll. If the embed cooperates with postMessage the
+			  iframe will be resized to the exact content height. */
+		  #embedded-site iframe { width: 100%; height: 10000px; border: 0; display: block; }
 		#embedded-overlay { position: absolute; inset: 0; z-index: 9999; background: transparent; touch-action: none; cursor: grab; }
 		#embedded-overlay[hidden] { display: none; }
 		/* No visible button: interaction is via double-tap on the iframe area (temporary disable). */
