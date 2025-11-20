@@ -62,20 +62,6 @@ window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16
 			z-index: 100000;
 		}
 </style>
-<style>
-/* Hide default vertical scrollbar while keeping scrolling functional */
-html, body {
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
-}
-html::-webkit-scrollbar, body::-webkit-scrollbar {
-	width: 0;
-	height: 0;
-}
-body {
-	overflow-x: hidden; /* prevent horizontal scrollbar */
-}
-</style>
 <link rel="stylesheet" id="twentytwentyfive-style-css" href="css/ttvHBzBUqMBJ.css" media="all">
 <link rel="stylesheet" id="elementor-frontend-css" href="css/r9EXtvYObM0P.css" media="all">
 <link rel="stylesheet" id="eael-general-css" href="css/rOZvYGdJyikG.css" media="all">
@@ -124,7 +110,20 @@ function jltmaNS(n){for(var e=n.split("."),a=window,i="",r=e.length,t=0;r>t;t++)
 @font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('fonts/bwenTkHSelAA.woff2') format('woff2');}
 @font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('fonts/kfsyCCes4cQQ.woff2') format('woff2');}
 </style>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"></head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+	<style id="embedded-site-styles">
+		/* Single-scroll layout: allow the page to scroll (one scrollbar) and
+		   set a large default iframe height so the iframe doesn't create
+		   its own inner scrollbar. For true automatic sizing you need
+		   cooperation from the embedded site (postMessage or same-origin). */
+		html, body { margin: 0; }
+		body { overflow: auto; }
+		#embedded-site { width: 100%; height: auto; min-height: 800px; overflow: visible; }
+		#embedded-site iframe { width: 100%; height: 1200px; border: 0; display: block; }
+		@media (max-width: 900px) { #embedded-site { min-height: 600px; } #embedded-site iframe { height: 900px; } }
+		@media (max-width: 600px) { #embedded-site { min-height: 480px; } #embedded-site iframe { height: 640px; } }
+	</style>
+</head>
 <body class="home wp-singular page-template page-template-elementor_canvas page page-id-7 wp-embed-responsive wp-theme-twentytwentyfive elementor-default elementor-template-canvas elementor-kit-6 elementor-page elementor-page-7">
 			<div data-elementor-type="wp-page" data-elementor-id="7" class="elementor elementor-7">
 				<div class="elementor-element elementor-element-2afee2c9 e-flex e-con-boxed e-con e-parent" data-id="2afee2c9" data-element_type="container" data-settings="{" background_background":"gradient"}"="">
@@ -175,61 +174,9 @@ src="https://www.facebook.com/tr?id=1397684491501570&ev=PageView&noscript=1"
 		<div class="elementor-element elementor-element-56659c94 e-flex e-con-boxed e-con e-parent" data-id="56659c94" data-element_type="container">
 					<div class="e-con-inner">
 				<div class="elementor-element elementor-element-447077b6 jltma-glass-effect-no elementor-widget elementor-widget-html" data-id="447077b6" data-element_type="widget" data-widget_type="html.default">
-					<iframe id="purchase-embed" src="https://www.kintu.org/product/0e5bfcbc-9090-441a-bcbc-fb7397fd812b" style="width:100%; height:900px; display:block; border:0;" loading="lazy" ></iframe>
-					<script>
-					(function(){
-						// create overlay to capture wheel/touch over the iframe and forward it to parent
-						var embed = document.getElementById('purchase-embed');
-						if(!embed) return;
-						var wrapper = document.createElement('div');
-						wrapper.style.position = 'relative';
-						wrapper.style.width = '100%';
-						wrapper.style.maxWidth = '100%';
-						wrapper.style.height = embed.style.height || '900px';
-						embed.parentNode.insertBefore(wrapper, embed);
-						wrapper.appendChild(embed);
-						var overlay = document.createElement('div');
-						overlay.className = 'embed-scroll-catcher';
-						overlay.style.position = 'absolute';
-						overlay.style.left = '0'; overlay.style.top = '0'; overlay.style.right = '0'; overlay.style.bottom = '0';
-						overlay.style.background = 'transparent';
-						overlay.style.zIndex = '10';
-						overlay.style.pointerEvents = 'auto';
-						wrapper.appendChild(overlay);
-
-						overlay.addEventListener('wheel', function(e){
-							e.preventDefault();
-							window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: 'auto' });
-						}, { passive: false });
-
-						var touchStartY = 0;
-						overlay.addEventListener('touchstart', function(e){ if(e.touches && e.touches.length) touchStartY = e.touches[0].clientY; }, { passive: true });
-						overlay.addEventListener('touchmove', function(e){
-							if(e.touches && e.touches.length){
-								var delta = touchStartY - e.touches[0].clientY;
-								window.scrollBy({ top: delta, behavior: 'auto' });
-								touchStartY = e.touches[0].clientY;
-								e.preventDefault();
-							}
-						}, { passive: false });
-					    overlay.addEventListener('touchmove', function(e){
-					        if(!e.touches || !e.touches.length) return;
-					        e.preventDefault();
-					        var curY = e.touches[0].clientY;
-					        var delta = touchStartY - curY;
-					        window.scrollBy({ top: delta, behavior: 'auto' });
-					        touchStartY = curY;
-					    }, { passive: false });
-
-					    var hideTimeout = null;
-					    overlay.addEventListener('click', function(){
-					        overlay.style.display = 'none';
-					        if(hideTimeout) clearTimeout(hideTimeout);
-					        hideTimeout = setTimeout(function(){ overlay.style.display = 'block'; }, 3000);
-					    });
-					})();
-						</script>
-						</div>
+					<!-- purchase embed removed as requested -->
+					<div class="removed-embed" aria-hidden="true" style="display:none;"></div>
+				</div>
 					</div>
 				</div>
 		<div class="elementor-element elementor-element-763eb4c4 e-flex e-con-boxed e-con e-parent" data-id="763eb4c4" data-element_type="container">
@@ -403,4 +350,8 @@ var jltma_data_table_vars = {"lengthMenu":"Display _MENU_ records per page","zer
 
 
 
+	<!-- Inserido: iframe para site externo (abaixo do conteúdo, mantém scrolagem única no iframe) -->
+	<div id="embedded-site" aria-label="embedded-site-container">
+		<iframe id="external-embed" title="Kintu product" src="https://www.kintu.org/product/0e5bfcbc-9090-441a-bcbc-fb7397fd812b" loading="lazy" sandbox="allow-scripts allow-forms allow-same-origin" scrolling="auto"></iframe>
+	</div>
 </body></html><!-- Page cached by LiteSpeed Cache 7.2 on 2025-07-27 16:30:51 -->
